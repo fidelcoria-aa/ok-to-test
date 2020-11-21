@@ -64,9 +64,10 @@ jobs:
                 status: 'in_progress',
               });
               console.log('res is ', res);
+              console.log('the return is', res.data.result);
               return res.data.result;
             }
-            catch (e) { console.log('error', e); return e; }
+            catch (e) { console.log('error ', e); return e; }
             
             return result;
 
