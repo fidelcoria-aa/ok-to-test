@@ -33,6 +33,19 @@ jobs:
       with:
         ref: 'refs/pull/${{ github.event.client_payload.pull_request.number }}/merge'
 
+    # Update check run called "integration-fork" to in progress
+    - uses: actions/github-script@v1
+      id: update-check-run-in-progress
+      if: ${{ always() }}
+      env:
+        number: ${{ github.event.client_payload.pull_request.number }}
+        job: ${{ github.job }}
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+            const script = require(`${process.env.GITHUB_WORKSPACE}/.github/workflows/integration-fork-in-progress.js`)
+            console.log(script({github, context}))
+
     # <insert integration tests needing secrets>
 
     - run: |
