@@ -48,19 +48,25 @@ jobs:
               pull_number: process.env.number
             });
             const ref = pull.head.sha;
-  
+            console.log('the ref is ', ref);
             const { data: checks } = await github.checks.listForRef({
               ...context.repo,
               ref
             });
   
             const check = checks.check_runs.filter(c => c.name === process.env.job);
-
-            const { data: result } = await github.checks.update({
-              ...context.repo,
-              check_run_id: check[0].id,
-              status: 'in_progress',
-            });
+            console.log(' the check obj is ', check);
+            let res;
+            try {
+              res = await github.checks.update({
+                ...context.repo,
+                check_run_id: check[0].id,
+                status: 'in_progress',
+              });
+              console.log('res is ', res);
+              return res.data.result;
+            }
+            catch (e) { console.log('error', e); return e; }
             
             return result;
 
