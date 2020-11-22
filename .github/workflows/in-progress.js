@@ -8,7 +8,7 @@ module.exports = async ({ github, context }) => {
   const response = await github.checks.create({
     // ...context.repo,
     owner: context.repo.owner,
-    repo: context.repo.name,
+    repo: context.repo.repo,
     head_sha: ref,
     name: 'integration-fork',
     status: 'in_progress',
