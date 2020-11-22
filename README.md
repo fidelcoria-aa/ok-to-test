@@ -2,6 +2,7 @@
 > Use GitHub Actions secrets in pull requests from forks 🍴🔑
 
 dummy change
+dummy change 2
 
 ## About
 
