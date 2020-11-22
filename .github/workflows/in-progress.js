@@ -11,14 +11,14 @@ module.exports = async ({ github, context }) => {
   });
   console.log('the job name: ', process.env.job)
   const check = checks.check_runs.filter(c => c.name === process.env.job);
-  console.log('the checks are ', check);
 
   for (c of check) {
-    await github.checks.update({
+    const here = await github.checks.update({
       ...context.repo,
       check_run_id: c.id,
       status: 'in_progress',
     });
+    console.log('this check update ', here);
   }
 
   return 'done';
