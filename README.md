@@ -1,7 +1,7 @@
 # Ok To Test
 > Use GitHub Actions secrets in pull requests from forks 🍴🔑
 
-dummy change
+done with this
 
 ## About
 
