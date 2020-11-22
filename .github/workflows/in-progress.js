@@ -5,21 +5,12 @@ module.exports = async ({ github, context }) => {
   });
   const ref = pull.head.sha;
 
-  const { data: checks } = await github.checks.listForRef({
+  const response = await github.checks.create({
     ...context.repo,
-    ref
+    head_sha: ref,
+    name: 'integration-fork',
+    status: 'in_progress',
   });
-  console.log('the job name: ', process.env.job)
-  const check = checks.check_runs.filter(c => c.name === process.env.job);
 
-  for (c of check) {
-    const here = await github.checks.update({
-      ...context.repo,
-      check_run_id: c.id,
-      status: 'in_progress',
-    });
-    console.log('this check update ', here);
-  }
-
-  return 'done';
-}
+  return response;
+} 
