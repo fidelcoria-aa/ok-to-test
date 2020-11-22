@@ -27,6 +27,12 @@ jobs:
       contains(github.event.client_payload.pull_request.head.sha, github.event.client_payload.slash_command.sha)
     steps:
 
+# Check out merge commit
+    - name: Fork based /ok-to-test checkout
+      uses: actions/checkout@v2
+      with:
+        ref: 'refs/pull/${{ github.event.client_payload.pull_request.number }}/merge'
+
     # Update check run called "integration-fork" to in progress
     - uses: actions/github-script@v1
       env:
@@ -37,12 +43,6 @@ jobs:
         script: |
           const script = require(`${process.env.GITHUB_WORKSPACE}/.github/workflows/in-progress.js`)
           console.log(await script({github, context}))
-
-    # Check out merge commit
-    - name: Fork based /ok-to-test checkout
-      uses: actions/checkout@v2
-      with:
-        ref: 'refs/pull/${{ github.event.client_payload.pull_request.number }}/merge'
 
     # <insert integration tests needing secrets>
 
